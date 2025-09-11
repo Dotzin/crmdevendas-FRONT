@@ -7,6 +7,7 @@ import {
     PointerSensor,
     useSensor,
     useSensors,
+    DragEndEvent,
 } from "@dnd-kit/core";
 import {
     SortableContext,
@@ -60,12 +61,12 @@ export default function Funil() {
         );
     }
 
-    function handleDragEnd(event: any) {
+    function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event;
         if (!over) return;
 
-        const sourceCol = findColumn(active.id);
-        const targetCol = findColumn(over.id) || over.id;
+        const sourceCol = findColumn(active.id as string);
+        const targetCol = findColumn(over.id as string) || over.id;
 
         if (!sourceCol || !targetCol) return;
 
@@ -81,7 +82,7 @@ export default function Funil() {
         } else {
             setColumns((prev) => {
                 const sourceItems = [...prev[sourceCol]];
-                const targetItems = [...prev[targetCol]];
+                const targetItems = [...prev[targetCol as string]];
 
                 const sourceIndex = sourceItems.findIndex((i) => i.id === active.id);
                 const [movedItem] = sourceItems.splice(sourceIndex, 1);
@@ -91,7 +92,7 @@ export default function Funil() {
                 return {
                     ...prev,
                     [sourceCol]: sourceItems,
-                    [targetCol]: targetItems,
+                    [targetCol as string]: targetItems,
                 };
             });
         }

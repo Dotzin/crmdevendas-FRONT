@@ -1,40 +1,22 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
-import { CalendarSearch, Funnel, LayoutDashboard, MessageCircleMore } from "lucide-react";
-
-export default function Sidebar() {
-    const [isHovered, setIsHovered] = useState(false);
-
+export default function Home() {
     return (
-        <div
-            className={`h-full bg-black text-white transition-all duration-300 flex flex-col ${
-                isHovered ? "w-56" : "w-16"
-            }`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+            <div className="text-center">
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                    Bem-vindo ao NOIR CRM
+                </h1>
+                <p className="text-xl text-gray-600 mb-8">
+                    Sistema de gestão de vendas e relacionamento com clientes
+                </p>
+                <Link 
+                    href="/login" 
+                    className="bg-red-900 text-white px-8 py-3 rounded-lg hover:bg-red-800 transition-colors"
                 >
                     Fazer Login
-                </a>
+                </Link>
             </div>
-                <li className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-xl cursor-pointer">
-                    <Funnel size={22} />
-                    {isHovered && <span>Funil</span>}
-                </li>
-                <li className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-xl cursor-pointer">
-                    <CalendarSearch size={22} />
-                    {isHovered && <span>Agenda</span>}
-                </li>
-                <li className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-xl cursor-pointer">
-                    <LayoutDashboard size={22} />
-                    {isHovered && <span>Dashboard</span>}
-                </li>
-                <li className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-xl cursor-pointer">
-                    <MessageCircleMore size={22} />
-                    {isHovered && <span>Contato</span>}
-                </li>
-            </ul>
         </div>
     );
 }
