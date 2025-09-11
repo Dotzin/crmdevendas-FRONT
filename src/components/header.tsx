@@ -49,7 +49,6 @@ export default function Header({
     }
     
     return (
-        return (
             <header className="w-full bg-red-900 flex items-center px-6 py-4 h-20 z-50">
                 <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-white flex items-center justify-center rounded">
@@ -74,6 +73,11 @@ export default function Header({
                             {userName[0]?.toUpperCase()}
                         </div>
                     )}
+                    <div className="text-white">
+                        <p className="font-medium">{userName}</p>
+                        {userEmail && <p className="text-sm text-gray-300">{userEmail}</p>}
+                    </div>
+                </div>
         </header>
     );
 }
