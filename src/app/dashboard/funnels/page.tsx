@@ -136,26 +136,3 @@ export default function Funil() {
         </div>
     );
 }
-
-                {Object.entries(columns).map(([colId, items]) => (
-                    <div
-                        key={colId}
-                        className="flex-1 max-w-xs p-4 bg-gray-100 rounded-lg min-h-[400px]"
-                    >
-                        <h3 className="mb-4 text-center font-semibold capitalize text-gray-700">
-                            {colId}
-                        </h3>
-                        <SortableContext
-                            items={items.map((i) => i.id)}
-                            strategy={verticalListSortingStrategy}
-                        >
-                            {items.map((item) => (
-                                <SortableItem key={item.id} {...item} />
-                            ))}
-                        </SortableContext>
-                    </div>
-                ))}
-            </div>
-        </DndContext>
-    );
-}
