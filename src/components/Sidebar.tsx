@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { CalendarSearch, Funnel, LayoutDashboard, MessageCircleMore } from "lucide-react";
@@ -8,12 +8,13 @@ export default function Sidebar() {
 
     return (
         <div
-            className={`h-screen bg-black text-white transition-all duration-300 flex flex-col 
-      ${isHovered ? "w-56" : "w-16"}`}
+            className={`h-full bg-black text-white transition-all duration-300 flex flex-col ${
+                isHovered ? "w-56" : "w-16"
+            }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <ul className="flex flex-col gap-2 mt-4 m-auto">
+            <ul className="flex flex-col gap-2 mt-4 px-2">
                 <li className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-xl cursor-pointer">
                     <Funnel size={22} />
                     {isHovered && <span>Funil</span>}

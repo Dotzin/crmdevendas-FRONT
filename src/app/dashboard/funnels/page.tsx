@@ -65,12 +65,11 @@ export default function Funil() {
         if (!over) return;
 
         const sourceCol = findColumn(active.id);
-        const targetCol = findColumn(over.id);
+        const targetCol = findColumn(over.id) || over.id;
 
         if (!sourceCol || !targetCol) return;
 
         if (sourceCol === targetCol) {
-            // mesma coluna → só reordenar
             setColumns((prev) => ({
                 ...prev,
                 [sourceCol]: arrayMove(
@@ -80,7 +79,6 @@ export default function Funil() {
                 ),
             }));
         } else {
-            // mover para outra coluna
             setColumns((prev) => {
                 const sourceItems = [...prev[sourceCol]];
                 const targetItems = [...prev[targetCol]];
@@ -88,12 +86,7 @@ export default function Funil() {
                 const sourceIndex = sourceItems.findIndex((i) => i.id === active.id);
                 const [movedItem] = sourceItems.splice(sourceIndex, 1);
 
-                const targetIndex = targetItems.findIndex((i) => i.id === over.id);
-                targetItems.splice(
-                    targetIndex >= 0 ? targetIndex : targetItems.length,
-                    0,
-                    movedItem
-                );
+                targetItems.push(movedItem);
 
                 return {
                     ...prev,
@@ -104,13 +97,46 @@ export default function Funil() {
         }
     }
 
+    const columnTitles = {
+        lead: "Lead",
+        qualificacao: "Qualificação",
+        negociacao: "Negociação",
+        fechado: "Fechado"
+    };
+
     return (
-        <DndContext
-            sensors={sensors}
-            collisionDetection={closestCorners}
-            onDragEnd={handleDragEnd}
-        >
-            <div className="flex justify-center gap-6 p-6">
+        <div className="h-full">
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">Funil de Vendas</h1>
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCorners}
+                onDragEnd={handleDragEnd}
+            >
+                <div className="flex gap-6 h-full overflow-x-auto">
+                    {Object.entries(columns).map(([colId, items]) => (
+                        <div
+                            key={colId}
+                            className="flex-1 min-w-[280px] p-4 bg-white rounded-lg shadow-sm border min-h-[500px]"
+                        >
+                            <h3 className="mb-4 text-center font-semibold text-gray-800 text-lg">
+                                {columnTitles[colId as keyof typeof columnTitles]}
+                            </h3>
+                            <SortableContext
+                                items={items.map((i) => i.id)}
+                                strategy={verticalListSortingStrategy}
+                            >
+                                {items.map((item) => (
+                                    <SortableItem key={item.id} {...item} />
+                                ))}
+                            </SortableContext>
+                        </div>
+                    ))}
+                </div>
+            </DndContext>
+        </div>
+    );
+}
+
                 {Object.entries(columns).map(([colId, items]) => (
                     <div
                         key={colId}
